@@ -1,0 +1,7 @@
+"0","# Split training and testing set"
+"0","sp <- 768/2"
+"0","df_train <- newdf[1:sp,]"
+"0","df_test <- newdf[(sp+1):dim(newdf)[1],]"
+"0","rm(newdf)"
+"0",""
+"0",""

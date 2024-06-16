@@ -1,0 +1,7 @@
+"0","# Constructing data set"
+"0","newdf <- df[,colSums(is.na(df))==0] # Drop columns with NaN"
+"0","newdf = newdf %>%  # Try to predict tommorrow's change with technical indicators"
+"0","  mutate(tmrchange = shift(close-open, n=-1L, fill=NA)/close) %>%"
+"0","  select(!c(time,Signal,open,high,low,close))"
+"0","newdf <- data.frame(scale(newdf))"
+"0",""

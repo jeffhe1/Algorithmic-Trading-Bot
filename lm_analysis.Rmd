@@ -1,0 +1,55 @@
+---
+title: "lm_analysis"
+output: html_document
+date: "2024-05-01"
+---
+```{r}
+# Load Dependencies and data
+library(tidyverse)
+library(dplyr)
+library(data.table)
+df <- read.csv("./data/TSLA.1D.csv")
+```
+
+
+```{r}
+# Constructing data set
+newdf <- df[,colSums(is.na(df))==0] # Drop columns with NaN
+newdf = newdf %>%  # Try to predict tommorrow's change percentage with technical indicators
+  mutate(tmrchange = shift(close-open, n=-1L, fill=NA)/close) %>%
+  select(!c(time,Signal,open,high,low,close))
+newdf <- data.frame(scale(newdf))
+
+```
+
+```{r}
+# Split training and testing set
+sp <- 768/2
+df_train <- newdf[1:sp,]
+df_test <- newdf[(sp+1):dim(newdf)[1],]
+rm(newdf)
+```
+
+
+```{r}
+# Construct linear model
+model <- lm(tmrchange ~ ., data=df_train)
+# Using stepwise selection
+stepmodel <- step(model, scope=~., trace=0)
+```
+
+```{r}
+summary(stepmodel)
+```
+
+```{r}
+plot(stepmodel)
+```
+
+
+```{r}
+df %>%
+  ggplot(mapping=aes(x=1:768, y=close)) + 
+  geom_line()
+```
+

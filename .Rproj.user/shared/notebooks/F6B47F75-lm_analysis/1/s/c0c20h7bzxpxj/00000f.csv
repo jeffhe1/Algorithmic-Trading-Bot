@@ -1,0 +1,2 @@
+"0","# Construct linear model"
+"0","model <- lm(tmrchange ~ ., data=df_train)"
