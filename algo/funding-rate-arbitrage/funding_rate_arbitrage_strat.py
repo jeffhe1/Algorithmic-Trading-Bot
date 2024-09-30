@@ -177,7 +177,7 @@ class FundingRateStrat:
                 sleep(10)
                 self.session.place_order(category = 'linear', symbol=symbol[1] ,side="Sell",order_type="Market",qty=qty)
                 self.session.place_order(category = 'spot', isLeverage=0,symbol=symbol[0] ,side="Buy",order_type="Market",qty=qty)
-                return tot_fees
+                return totmkdi_fees
             """
             
         except KeyboardInterrupt:
@@ -213,4 +213,4 @@ load_dotenv()
 api_key = os.getenv("TESTNET_API_KEY")
 api_secret_key= os.getenv("TESTNET_API_SECRET_KEY")
 coin_pair = {'spot': 'ETHUSDT', 'futures':'ETHUSDT'}
-FundingRateStrat(api_key, api_secret_key, testnet=True).execute_strategy(coin_pair, cycles=0)
+FundingRateStrat(api_key, api_secret_key).execute_strategy(coin_pair, cycles=0)
